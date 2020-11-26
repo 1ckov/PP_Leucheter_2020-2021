@@ -1,4 +1,4 @@
-package src.higher_order_functions;
+package higher_order_functions;
 
     public class Main{
 //     public static void main(String[] args) {

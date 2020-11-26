@@ -1,4 +1,4 @@
-package src.filter_map_reduce;
+package filter_map_reduce;
 
 public class Main {
     public static <T> int count(T[] array, Predicate<T> pred){

@@ -1,4 +1,4 @@
-package src.function_builer;
+package function_builer;
 
 public class AccessAspect {
     public static Function addAdccess(Predicate<Object> p, Function f){

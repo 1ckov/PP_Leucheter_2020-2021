@@ -1,4 +1,4 @@
-package src.scope;
+package scope;
 
 import java.util.Comparator;
 

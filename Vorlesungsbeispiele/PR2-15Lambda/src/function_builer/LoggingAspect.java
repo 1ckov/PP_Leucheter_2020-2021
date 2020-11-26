@@ -1,4 +1,4 @@
-package src.function_builer;
+package function_builer;
 
 public class LoggingAspect {
     public static Function addLog(Function f) {

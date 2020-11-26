@@ -1,4 +1,4 @@
-package src.function_builer;
+package function_builer;
 
 public interface Predicate<T> {
     boolean test(T t);

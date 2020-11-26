@@ -1,4 +1,4 @@
-package src.scope;
+package scope;
 
 public class Scoping2nd {
     public String toString(){

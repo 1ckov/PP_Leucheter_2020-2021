@@ -1,4 +1,4 @@
-package src.functional_interface_example;
+package functional_interface_example;
 
 public class Main {
     

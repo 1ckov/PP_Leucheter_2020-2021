@@ -1,4 +1,4 @@
-package src.using_existing_interfaces;
+package using_existing_interfaces;
 //import java.util.function.IntBinaryOperator;
 import java.util.function.BiFunction;
 

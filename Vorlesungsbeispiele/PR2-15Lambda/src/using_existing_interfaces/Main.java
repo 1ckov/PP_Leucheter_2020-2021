@@ -1,7 +1,7 @@
-package src.using_existing_interfaces;
+package using_existing_interfaces;
 
 import java.util.function.BiFunction;
-import src.functional_interface_example.Action;
+import functional_interface_example.Action;
 //import java.util.function.IntBinaryOperator;
 
 public class Main {
