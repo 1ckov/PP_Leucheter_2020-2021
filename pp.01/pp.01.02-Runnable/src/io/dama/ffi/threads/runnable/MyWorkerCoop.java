@@ -6,8 +6,10 @@ class MyWorkerCoop implements Runnable {
     @Override
     public void run() {
         this.self = Thread.currentThread();
-        while (true) {
-            System.out.println(this.self.getName() + ": ID => " + this.self.getId());
+        int i = 0;
+        while (i < 5) {
+            i++;
+            System.out.println(this.self.getName() + ": ID => " + this.self.getId() + " i = " + i);
             Thread.yield();
         }
     }

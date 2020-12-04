@@ -4,13 +4,10 @@ public class Sensor extends Thread {
     // eigentlich abstract
 
     private final long frequency;
-    private Runnable runner;
 
-    public Sensor(final long frequency, Runnable runner) {
-        super(runner);
-        this.runner = runner;
+    public Sensor(final long frequency) {
+        System.out.println("Priority: " + this.getPriority()+ "ID: " + this.getId());
         this.frequency = frequency;
-        start();
     }
 
     /**
@@ -29,14 +26,16 @@ public class Sensor extends Thread {
     public void run() {
         while (true) {
             System.out.println("reading: " + reading());
-            runner.run();
+            try {
+                Thread.sleep(this.frequency);
+            } catch (final InterruptedException e) {
+                // empty
+            }
         }
     }
 
     public static void main(final String... args) {
-        Runnable runer = () -> {
-            System.out.println("im running");
-        };
-        var s = new Sensor(1000, runer);
+        var s = new Sensor(1000);
+        s.start();
     }
 }
