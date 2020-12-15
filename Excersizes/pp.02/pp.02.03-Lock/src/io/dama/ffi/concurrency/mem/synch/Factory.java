@@ -4,13 +4,19 @@ import io.dama.ffi.concurrency.mem.synch.model.Type;
 
 public class Factory {
 
-    private static Type instance;
+    //Could Add volatile to instance for Thread safety
+    private volatile static Type instance;
     private static Object lock = new Object();
     public static Type getInstance() {
         Type.prepare();
-        synchronized(lock){
-            if (Factory.instance == null) {
-                Factory.instance = new Type();
+        //Highest Performance because we dont Enter 
+        //the Syncronized block unless we have to
+        if(Factory.instance == null){
+            synchronized(lock){
+                //A double check is needed incase it has been changed
+                if (Factory.instance == null) {
+                    Factory.instance = new Type();
+                }
             }
         }
         return Factory.instance;
