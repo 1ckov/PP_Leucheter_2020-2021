@@ -6,9 +6,11 @@
 
 
 ### ``Callable<T>`` und ``Future<T>`` ###
-
+F:
 Für ``Expression<T>`` und ``RunnableWithResult<T>`` gibt es seit Java 5 ``Callable<T>`` und ``Future<T>``. Bilden Sie zwei Paare: Welches Java 5 Interface ersetzt das selbst entwickelte ``Expression<T>`` und welches ``RunnableWithResult<T>``?  
-
+A:
+Callable<Expression>
+Futurre<RunnableWithResults>
 
 ### ``Main`` ###
 

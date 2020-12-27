@@ -1,8 +1,6 @@
 package io.dama.ffi.threadpool;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
-
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.concurrent.Executors;
@@ -18,7 +16,7 @@ public class ScheduledThreadPoolTest {
         scheduler.schedule(() -> beeperHandle.cancel(true), 5 * 3, SECONDS);
         scheduler.schedule(() -> System.exit(0), (5 * 3) + 5, SECONDS);
         System.out.println("all tasks scheduled");
-        final Date date = DateFormat.getDateTimeInstance().parse("22.10.2017 20:15:00");
+        final Date date = new Date();
         scheduler.schedule(() -> System.out.println("Tatort fängt an"), date.getTime() - System.currentTimeMillis(),
                 MILLISECONDS);
     }

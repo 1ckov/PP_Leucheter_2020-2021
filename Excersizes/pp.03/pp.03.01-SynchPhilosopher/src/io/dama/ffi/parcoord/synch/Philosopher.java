@@ -1,13 +1,18 @@
 package io.dama.ffi.parcoord.synch;
 
 import java.util.Random;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 
 public class Philosopher extends Thread {
     private final Chopstick left;
     private final Chopstick right;
     private final Random random;
+    private Condition isEating;
+    private Condition isThinking;
     private int eaten;
     private final int seat;
+    private Lock table;
 
     private volatile boolean stop;
 
@@ -26,13 +31,17 @@ public class Philosopher extends Thread {
         interrupt();
     }
 
-    public Philosopher(final int seat, final Chopstick left, final Chopstick right) {
+    public Philosopher(final int seat, final Chopstick left, 
+            final Chopstick right, Lock table, Condition isEating, Condition isThinking) {
         this.stop = false;
         this.seat = seat;
         this.left = left;
         this.right = right;
         this.random = new Random();
         this.eaten = 0;
+        this.table = table;
+        this.isEating = isEating;
+        this.isThinking = isThinking;
     }
 
     @Override

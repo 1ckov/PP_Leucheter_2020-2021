@@ -13,26 +13,45 @@ public class BoundedBuffer<T> {
     int putptr, takeptr, count;
 
     public void put(final T x) throws InterruptedException {
-        // solange der Speicher voll ist, warten
-        this.items[this.putptr] = x;
-        if (++this.putptr == this.items.length) {
-            this.putptr = 0;
+        lock.lock();
+        try {
+            while (this.count == this.items.length) {
+                notFull.await();
+            }
+            // solange der Speicher voll ist, warten
+            this.items[this.putptr] = x;
+            if (++this.putptr == this.items.length) {
+                this.putptr = 0;
+            }
+            ++this.count;
+            // nun ist etwas neues im Speicher: Alle wartenden Threads benachrichtigen
+            notEmpty.signalAll();
+
+        } finally {
+            lock.unlock();
         }
-        ++this.count;
-        // nun ist etwas neues im Speicher: Alle wartenden Threads benachrichtigen
     }
 
     public T take() throws InterruptedException {
-        // solange der Speicher leer ist, mit der Bedingungsvariablen notEmpty warten
-        @SuppressWarnings("unchecked")
-        final var x = (T) this.items[this.takeptr];
-        if (++this.takeptr == this.items.length) {
-            this.takeptr = 0;
+        lock.lock();
+        try {
+            // solange der Speicher leer ist, mit der Bedingungsvariablen notEmpty warten
+            while (count == 0) {
+                notEmpty.await();
+            }
+            @SuppressWarnings("unchecked")
+            final var x = (T) this.items[this.takeptr];
+            if (++this.takeptr == this.items.length) {
+                this.takeptr = 0;
+            }
+            --this.count;
+            // nun ist etwas Platz im Speicher: Alle für notFull wartenden Threads
+            // benachrichtigen
+            notFull.signalAll();
+            return x;
+        } finally {
+            lock.unlock();
         }
-        --this.count;
-        // nun ist etwas Platz im Speicher: Alle für notFull wartenden Threads
-        // benachrichtigen
-        return x;
     }
 
     public static void main(final String[] args) throws InterruptedException {

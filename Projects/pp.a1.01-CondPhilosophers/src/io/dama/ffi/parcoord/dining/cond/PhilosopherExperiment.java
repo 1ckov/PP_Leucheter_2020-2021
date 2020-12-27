@@ -1,4 +1,5 @@
 package io.dama.ffi.parcoord.dining.cond;
+
 import java.util.concurrent.locks.ReentrantLock;
 
 public class PhilosopherExperiment {
@@ -8,8 +9,9 @@ public class PhilosopherExperiment {
     static final int PHILOSOPHER_NUM = 5;
     static final int EXP_DURATION_MS = 20000;
     static IPhilosopher[] philosophers = new Philosopher[PHILOSOPHER_NUM];
-    public static void main(final String[] args) throws InterruptedException {
-        final var table = new ReentrantLock();
+
+    public static void main(final String... args) throws InterruptedException {
+        var table = new ReentrantLock();
         for (var i = 0; i < PHILOSOPHER_NUM; i++) {
             philosophers[i] = new Philosopher();
             philosophers[i].setTable(table);

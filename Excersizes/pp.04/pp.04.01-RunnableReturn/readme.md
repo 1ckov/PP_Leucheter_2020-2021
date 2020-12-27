@@ -17,8 +17,9 @@ Die Methode ``run()`` muss überschrieben werden. In der Methode muss der Ausdru
 Sollte die Auswertung des Ausdrucks länger benötigen, muss der Aufrufer feststellen können, ob das Ergebnis schon vorliegt. Dafür ist die Methode ``isAvailable()`` vorgesehen. Getter und ``isAvailable()`` sollen beide asynchron arbeiten: Egal, ob ein Wert vorliegt oder nicht, der Aufruf blockiert nicht.
 
 ### ``Main`` ###
+
 Erzeugen Sie drei ``RunnableWithResult``-Objekte für die Berechnung des Ausdrucks ((1+2)+(3+4)), die nebenläufig zum Main-Thread ausgeführt werden. Das Ergebnis soll ausgegeben werden. Sie können *Lambda-Ausdrücke* oder *anonyme innere Klassen* benutzen um die ``Expression``'s zu erzeugen.
 
 ### Exceptions ###
- 
+
 **Achtung:** Noch nicht so toll ist der Umgang mit *Exceptions* bei ``RunnableWithResult<T>``, die während der Auswertung des Ausdrucks auftreten könnten. Probieren Sie es aus, indem Sie einen "Division durch 0 Error" in einem ``RunnableWithResult<>``-Ausdruck provozieren. Wann wird die Exception realisiert?

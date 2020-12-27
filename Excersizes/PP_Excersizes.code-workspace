@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../Solutions"
+		},
+		{
+			"path": "../Projects"
 		}
 	],
 	"settings": {}

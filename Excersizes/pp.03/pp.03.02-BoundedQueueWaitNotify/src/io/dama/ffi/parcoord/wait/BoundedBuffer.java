@@ -5,18 +5,25 @@ public class BoundedBuffer<T> {
     final Object[] items = new Object[8];
     int putptr, takeptr, count;
 
-    public void put(final T x) throws InterruptedException {
+    public synchronized void put(final T x) throws InterruptedException {
         // solange der Speicher voll ist, warten
+        while (this.count == this.items.length) {
+            wait();
+        }
         this.items[this.putptr] = x;
         if (++this.putptr == this.items.length) {
             this.putptr = 0;
         }
         ++this.count;
         // nun ist etwas neues im Speicher: Alle wartenden Threads benachrichtigen
+        notifyAll();
     }
 
-    public T take() throws InterruptedException {
+    public synchronized T take() throws InterruptedException {
         // solange der Speicher leer ist, warten
+        while (this.count == 0) {
+            wait();
+        }
         @SuppressWarnings("unchecked")
         final var x = (T) this.items[this.takeptr];
         if (++this.takeptr == this.items.length) {
@@ -24,7 +31,9 @@ public class BoundedBuffer<T> {
         }
         --this.count;
         // nun ist etwas Platz im Speicher: Alle wartenden Threads benachrichtigen
+        notifyAll();
         return x;
+
     }
 
     public static void main(final String[] args) throws InterruptedException {
