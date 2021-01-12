@@ -11,7 +11,7 @@ public class Task implements Runnable {
     public void run() {
         System.out.println("Hi my name is: " + Thread.currentThread().getName());
         try {
-            System.out.println("Imma Sleep now for 1 sec");
+            System.out.println("Imma Sleep now for a sec");
             Thread.sleep(20000);
         } catch (InterruptedException e) {
             System.err.println("There was na Interruption");

@@ -14,7 +14,7 @@ import java.util.Random;
  *
  */
 class MonteCarloPiSeq {
-    static int TOTAL_CYCLES = 10000000;
+    static int TOTAL_CYCLES = 100000000;
 
     public static InOutTuple getResultMonteCarloPiDraw(final int cycles) {
         var in = 0;
@@ -39,8 +39,10 @@ class MonteCarloPiSeq {
      */
     public static void main(final String... args) {
         var result = getResultMonteCarloPiDraw(TOTAL_CYCLES);
+        var before = System.nanoTime();
         var pi = ((4.0 * result.in()) / (result.in() + result.out()));
-        System.out.println(pi);
+        var after = System.nanoTime(); 
+        System.out.format("After %d miliseconds the aproximation of pi = %f\n",(after-before),pi);
     }
 
 }

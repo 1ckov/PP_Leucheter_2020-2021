@@ -50,4 +50,10 @@ public final class InOutTuple {
         }
         return true;
     }
+
+    public InOutTuple add(InOutTuple that){
+        return new InOutTuple(
+        this.in + that.in, 
+        this.out + that.out);
+    }
 }
