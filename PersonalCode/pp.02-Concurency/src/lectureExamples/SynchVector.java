@@ -1,4 +1,4 @@
-package lecture_examples;
+package lectureExamples;
 
 import java.util.Vector;
 

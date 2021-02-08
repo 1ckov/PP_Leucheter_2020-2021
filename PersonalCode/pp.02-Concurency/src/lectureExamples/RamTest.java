@@ -1,4 +1,4 @@
-package lecture_examples;
+package lectureExamples;
 
 public class RamTest extends Thread{
     //Gets set through constructor

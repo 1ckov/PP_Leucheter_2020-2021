@@ -1,4 +1,4 @@
-package lecture_examples;
+package lectureExamples;
 
 public class ThreadLocalDemo {
     public static class Runner implements Runnable {

@@ -1,14 +1,10 @@
-package lecture_examples;
+package lectureExamples;
 
-public class SynchAccess2 {
-    //Our counter which we will double
+public class SynchAccess3 {
     private int counter = 1;
-    //Our method which will double our counter from outside
-    public void doubler() {
-    //As soon as we enter the synchronized block, 
-    //any other Thread wanting to use this 
-    //will have to wait until we are Finished
-        synchronized(this){
+    private Object lock = new Object();
+    public void doubler(){
+        synchronized(lock){
             this.counter = this.counter * 2;
             System.out.printf("%s: counter==%d\n ",Thread.currentThread().getName(),this.counter);
             try {
@@ -17,9 +13,10 @@ public class SynchAccess2 {
                 System.err.println(e);
             }
         }
+
     }
     public void decreser(){
-        synchronized(this){
+        synchronized(lock){
             this.counter = this.counter - 2;
             System.out.printf("%s: counter==%d\n ",Thread.currentThread().getName(),this.counter);
             try {
@@ -31,13 +28,13 @@ public class SynchAccess2 {
     }
 
     public static void main(String[] args) {
-        var counter = new SynchAccess2();
-        new Thread(() -> {
+        final var counter = new SynchAccess3();
+        new Thread (()-> {
             while(true){
                 counter.doubler();
             }
         },"doubler").start();
-        new Thread(() -> {
+        new Thread (()-> {
             while(true){
                 counter.decreser();
             }

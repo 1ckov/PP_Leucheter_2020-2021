@@ -1,4 +1,4 @@
-package personal_examples;
+package personalExamples;
 
 public class MemoryBariers {
     //MemBarier 1 - volatile

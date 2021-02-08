@@ -1,4 +1,4 @@
-package lecture_examples;
+package lectureExamples;
 
 public class SynchAccess1 {
     //Our counter which we will double

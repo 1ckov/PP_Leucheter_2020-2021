@@ -18,8 +18,8 @@ import java.util.concurrent.Future;
  *
  */
 class MonteCarloPiFuture {
-    static int TOTAL_CYCLES = 100000000;
-    static int PARALLELNESS = 16;
+    static int TOTAL_CYCLES = 10000000;
+    static int PARALLELNESS = 3;
 
     public static InOutTuple getResultMonteCarloPiDraw(final int cycles) {
         var in = 0;
@@ -54,7 +54,8 @@ class MonteCarloPiFuture {
 
         // 2. We create as many new Futures as we have Threads to use
         // also we reduce the cycle amounts by the number of futures
-        for (int i = 0; i < PARALLELNESS; i++) {
+        futures.add(executor.submit( () -> getResultMonteCarloPiDraw((TOTAL_CYCLES/ PARALLELNESS) + 1)));
+        for (int i = 1; i < PARALLELNESS; i++) {
             futures.add(executor.submit(() -> {
                 return getResultMonteCarloPiDraw(TOTAL_CYCLES / PARALLELNESS);
             }));

@@ -1,4 +1,4 @@
-package lecture_examples;
+package lectureExamples;
 
 public class Counter {
     public int counter = 0;

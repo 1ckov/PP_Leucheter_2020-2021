@@ -1,6 +1,7 @@
 package io.dama.ffi.concurrency.pi;
 
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Berechnung von pi duch Monte Carlo Verfahren: Vergleich der Anzahl von
@@ -13,8 +14,9 @@ import java.util.Random;
  * @author Sandro Leuchter
  *
  */
-class MonteCarloPiFuture {
+class MonteCarloPiCF {
     static int TOTAL_CYCLES = 10000000;
+    static int PARALLELISM = 3;
 
     public static InOutTuple getResultMonteCarloPiDraw(final int cycles) {
         var in = 0;
@@ -39,7 +41,21 @@ class MonteCarloPiFuture {
      */
     public static void main(final String... args) {
         final var now = System.currentTimeMillis();
-        final var result = getResultMonteCarloPiDraw(TOTAL_CYCLES);
+        // 1. Create first Compleation Stage
+        CompletableFuture<InOutTuple> cf = 
+            CompletableFuture.supplyAsync(()-> getResultMonteCarloPiDraw(TOTAL_CYCLES/PARALLELISM))
+                // 2. Then we Combine it with the Second Compleation Stage    
+                .thenCombineAsync(
+                    CompletableFuture.supplyAsync(() -> getResultMonteCarloPiDraw(TOTAL_CYCLES/PARALLELISM))
+                    // 2.5 and combine the two Tuple Objects into one
+                        ,(final InOutTuple tuple, final InOutTuple otherTuple) -> tuple.add(otherTuple))
+                .thenCombineAsync(
+                    // 3. Then we Combine the 1,2 Stages which are now one, with the Third Compleation stage
+                    CompletableFuture.supplyAsync(() -> getResultMonteCarloPiDraw((TOTAL_CYCLES/PARALLELISM)+1))
+                        // 3.5 and combine the Tuple Objects again
+                        ,(final InOutTuple tuple, final InOutTuple otherTuple) -> tuple.add(otherTuple));
+        //4. Finally we call join and get our InOutTuple with the result back
+        final var result = cf.join();
         final var pi = ((4.0 * result.in()) / (result.in() + result.out()));
         System.out.println(pi + ", " + (System.currentTimeMillis() - now) + " ms");
     }
