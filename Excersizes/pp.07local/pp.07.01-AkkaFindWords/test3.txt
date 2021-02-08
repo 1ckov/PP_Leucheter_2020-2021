@@ -1,0 +1,4 @@
+Erlang Idiom: Der Teil eines Programms der absolut korrekt sein muss, da er andere (potenziell unsicherere) Teile überwacht und ggf. neu startet.
+Man sollte bestrebt sein, den Error Kernel zu minimieren, damit wenigstens dort Fehlerfreiheit garantiert werden kann.
+Im Actor-Paradigma sollte jeder Prozess der einen Anwendungszweck hat (Worker) einen übergeordneten Supervisor-Prozess haben, der als dessen Error-Kernel fungiert.
+Es spricht nichts dagegen, auch komplexere Supervisor-Prozesse von einfacheren Error-Kernel-beinhaltenden Meta-Supervisor-Prozessen überwachen zu lassen.

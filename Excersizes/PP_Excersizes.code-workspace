@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../PersonalCode"
+		},
+		{
+			"path": "../Solutions"
+		},
+		{
+			"path": "../Projects"
+		}
+	],
+	"settings": {
+		"java.dependency.syncWithFolderExplorer": false
+	}
+}

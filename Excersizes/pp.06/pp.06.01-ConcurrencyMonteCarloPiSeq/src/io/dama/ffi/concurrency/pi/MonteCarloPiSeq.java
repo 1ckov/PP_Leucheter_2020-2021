@@ -1,0 +1,48 @@
+package io.dama.ffi.concurrency.pi;
+
+import java.util.Random;
+
+/**
+ * Berechnung von pi duch Monte Carlo Verfahren: Vergleich der Anzahl von
+ * zufällig gewähten Punkten innerhalb eines Viertelkreises (Radius r = 1) bzw.
+ * innerhalb eines Quadrates (Kantenlänge 1) analog zu Fläche eines
+ * Viertelkreises (pi * r^2 / 4) mit der Fläche des Quadrates (1 = 1 * 1).
+ *
+ * Sequenzielle Berechnung (im Main-Thread)
+ *
+ * @author Sandro Leuchter
+ *
+ */
+class MonteCarloPiSeq {
+    static int TOTAL_CYCLES = 100000000;
+
+    public static InOutTuple getResultMonteCarloPiDraw(final int cycles) {
+        var in = 0;
+        var out = 0;
+        var r = new Random();
+        for (var i = 0; i < cycles; i++) {
+            var x = r.nextDouble();
+            var y = r.nextDouble();
+            if (Math.sqrt((x * x) + (y * y)) <= 1.0) {
+                in++;
+            } else {
+                out++;
+            }
+        }
+        return new InOutTuple(in, out);
+    }
+
+    /**
+     * main-Methode
+     *
+     * @param args Kommandozeilenparameter (nicht benutzt)
+     */
+    public static void main(final String... args) {
+        var result = getResultMonteCarloPiDraw(TOTAL_CYCLES);
+        var before = System.nanoTime();
+        var pi = ((4.0 * result.in()) / (result.in() + result.out()));
+        var after = System.nanoTime(); 
+        System.out.format("After %d miliseconds the aproximation of pi = %f\n",(after-before),pi);
+    }
+
+}

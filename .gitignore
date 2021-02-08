@@ -1,2 +1,2 @@
 #Zip Files should not get tracked
-*.zip
+/.metadata/
